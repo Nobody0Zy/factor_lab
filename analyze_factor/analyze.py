@@ -33,7 +33,9 @@ class zyFactorAnalyzer:
         factor_copy = self.factor_data.copy()
         returns_copy = self.forward_returns.copy()[self._column_periods]
         returns_copy['factor'] = factor_copy
-        return returns_copy.dropna()
+        # 这里没有dropna，保留了包含nan的数据，因为是用pandas的corrwith计算，pandas会自动忽略nan；
+        # 如果dropna了，会使得整体的数据量减少，导致计算结果不准确
+        return returns_copy
     
     def plot_factor_hist(self,del_inf=False,del_qrange=None,del_range=None):
         factor_data_copy = self.factor_data.copy()
@@ -167,10 +169,6 @@ class zyFactorAnalyzer:
         model = sm.OLS(y,x)
         results = model.fit()
         # print(results.summary())
-        # 打印斜率
-        print(f'{title} slope: {results.params[1]}')
-        # 打印截距
-        print(f'{title} intercept: {results.params[0]}')
         import matplotlib.pyplot as plt
         fig, ax = plt.subplots(figsize=(10, 6))
         # print(x,y)
