@@ -58,8 +58,10 @@ class zyFactorAnalyzer:
     
     def analyze_ic_res(self):
         analyze_res_df = pd.DataFrame(index=['norm_ic_mean','norm_ic_std',
+                                             'norm_ic_0.02_percent','norm_ic_t',
                                              'norm_ir','norm_abs_ic',
                                              'rank_ic_mean','rank_ic_std',
+                                             'rank_ic_0.02_percent','rank_ic_t',
                                              'rank_ir','rank_abs_ic',
                                              ],
                                       columns = self._column_periods)
@@ -67,11 +69,15 @@ class zyFactorAnalyzer:
         # norm_ic
         analyze_res_df.loc['norm_ic_mean'] = self.norm_ic.mean()
         analyze_res_df.loc['norm_ic_std'] = self.norm_ic.std()
+        analyze_res_df.loc['norm_ic_0.02_percent'] = self.norm_ic[self.norm_ic.abs()>0.02].count()/self.norm_ic.count()
+        # 对norm_ic进行t检验,暂定
         analyze_res_df.loc['norm_ir'] = self.norm_ic.mean()/self.norm_ic.std()
         analyze_res_df.loc['norm_abs_ic'] = self.norm_abs_ic
         # rank_ic
         analyze_res_df.loc['rank_ic_mean'] = self.rank_ic.mean()
         analyze_res_df.loc['rank_ic_std'] = self.rank_ic.std()
+        analyze_res_df.loc['rank_ic_0.02_percent'] = self.rank_ic[self.rank_ic.abs()>0.02].count()/self.rank_ic.count()
+        # 对rank_ic进行t检验,暂定
         analyze_res_df.loc['rank_ir'] = self.rank_ic.mean()/self.rank_ic.std()
         analyze_res_df.loc['rank_abs_ic'] = self.rank_abs_ic
         return analyze_res_df
