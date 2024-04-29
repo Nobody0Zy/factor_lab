@@ -7,6 +7,9 @@ idx = pd.IndexSlice
 
 class AnalyzeFactorNotes:
     def __init__(self,factor_name,start_date,end_date,med_tf=False,z_score_tf=False,demean_tf=False,sample_num=None,sample_every_date_tf=False):
+        import sys
+        sys.path.append(r'E:\factor_lab\factor_lab\analyze_factor')
+        # sys.path.append(r'D:\QUANT_GAME\python_game\factor\factor_lab\analyze_factor')
         # 初始化因子处理信息
         self.factor_name = factor_name
         self.start_date = start_date
@@ -52,7 +55,6 @@ class AnalyzeFactorNotes:
     
     def get_data_for_analysis(self):
         # 导入需要的包
-        sys.path.append(r'D:\QUANT_GAME\python_game\factor\factor_lab\analyze_factor')
         import performance as pef
         # 获取用于分析的因子数据和收益数据
         forward_returns_for_analysis,factor_data_for_analysis = \
@@ -68,7 +70,7 @@ class AnalyzeFactorNotes:
 
     def analysis_factor(self,periods=(1,2,3,5,8,13,21,34,55,89,144,233,377,)):
         # 导入diy的因子分析库
-        sys.path.append(r'D:\QUANT_GAME\python_game\factor\factor_lab\analyze_factor')
+
         from analyze import zyFactorAnalyzer as zy_fa
         import warnings
         warnings.filterwarnings('ignore')
