@@ -150,6 +150,7 @@ class zyFactorAnalyzer:
         factor_data = self.factor_data.copy()
         forward_returns_periods = self.forward_returns.copy()[[f'period_{p}' for p in periods_list]]
         forward_returns_periods['factor'] = factor_data
+        forward_returns_periods = forward_returns_periods.replace([-np.inf,np.inf],np.nan)
         forward_returns_periods.dropna(inplace=True)       
 
         if sample_num is not None:
